@@ -1,0 +1,12 @@
+.item{
+    background: #ff3f4d;
+    height: 300px;
+}
+
+.progress{
+    padding-top: 0.3rem;
+    
+}
+ .noactive{
+    opacity: 0;
+ }
