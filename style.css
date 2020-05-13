@@ -1,12 +1,54 @@
-.item{
-    background: green;
-    height: 300px;
+.jumbotron {
+   padding: 2rem 2rem;
+ }
+
+#Keybutton:hover {
+   cursor: pointer;
+   box-shadow: 4px 6px 13px 0px rgba(150,144,150,1);
 }
 
-.progress{
-    padding-top: 0.3rem;
-    
+.progress {
+    padding-top: 0.3rem;  
 }
- .noactive{
+
+#info {
+   color: red;
+}
+
+.noactive {
     opacity: 0;
  }
+
+.card {
+   background-color: rgb(189, 183, 183);
+   height: 33rem;
+   display: flex;
+   align-items: center;
+   justify-content: space-between; 
+   overflow: hidden;
+   text-align: center;
+   font-family: "Nunito Sans";
+   font-size: 0.9rem;
+   font-weight: 600;
+}
+
+.card:hover {
+   cursor: pointer;
+   box-shadow: 4px 6px 13px 0px rgba(150,144,150,1);
+}
+
+.card :last-child:after {
+    content: '\2730';
+ }
+
+.card img {
+   width: 98%;
+   box-shadow: 4px 4px 6px 0px rgba(150,144,150,1);
+}
+
+footer {
+   text-align: right;
+   font-size: 0.5em;
+   background-color: rgba(212, 211, 211, 0.6);
+   margin-top: 0.5rem;
+}
