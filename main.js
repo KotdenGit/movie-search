@@ -59,7 +59,7 @@ async function createSlider (movies) {
 
             let posterMovie = document.createElement("img");
             if (movie.Poster === "N/A") {
-                posterMovie.src = '/noPoster.jpg';
+                posterMovie.src = 'noPoster.jpg';
             } else {
                 posterMovie.src = movie.Poster;
             }
