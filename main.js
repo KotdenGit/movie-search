@@ -1,7 +1,20 @@
 const apiKey = '128e1a9b';
-let moviesName = 'Donnie Darko';
+const moviesName = 'Donnie Darko'; // Mulholland Drive
+
+const warningInfo = document.getElementById("info");
 let isSpinnerOff = true;
-getMoviesPageData(moviesName);
+
+const sliderCards = document.getElementById("slider")
+const textSerch = document.getElementById("searchText");
+
+const form = document.getElementById('searchForm');
+form.addEventListener('submit', searchInput);
+
+function searchInput(event){
+    warningInfo.innerHTML = "";
+    event.preventDefault();
+    createSlider(getMoviesPageData(textSerch.value));
+}
 
 async function getMoviesPageData(name, pageNumber = 1) {
     try {
@@ -20,29 +33,74 @@ async function getMoviesPageData(name, pageNumber = 1) {
         } else {
             spinnerVisionToggler();
             if (pageNumber > 1) {
-                return "too many results";
+                return warningInfo = "Too many results";
             }
-            console.log(`Ошибка ${data.Error}`);
-            return data.Error;
+            return warningInfo = `Сan't find, ${data.Error}`;
         }
-        spinnerVisionToggler();
-        return data;
+        
+        return data.Search;
     } catch (error) {
-        console.log(error); // info - текстовый тег под инпутом
+        warningInfo.innerHTML = `Something went wrong, try changing the query. ${error}`;
+    }
+}
+
+async function createSlider (movies) {
+    try{
+        let fragment = document.createDocumentFragment();
+        let moviesDisplay = await movies;
+        
+        for (let movie of moviesDisplay) {
+            let movieCard = document.createElement("div");
+            movieCard.classList.add("swiper-slide","card");
+        
+            let nameMovie = document.createElement("div");
+            nameMovie.innerHTML = movie.Title;
+            movieCard.appendChild(nameMovie);
+
+            let posterMovie = document.createElement("img");
+            if (movie.Poster === "N/A") {
+                posterMovie.src = '/noPoster.jpg';
+            } else {
+                posterMovie.src = movie.Poster;
+            }
+            posterMovie.alt = movie.Title;
+            movieCard.appendChild(posterMovie); 
+
+            let movieYear = document.createElement("div");
+            movieYear.innerHTML = movie.Year;
+            movieCard.appendChild(movieYear);
+
+            let movieRating = document.createElement("div");
+            movieRating.innerHTML = movie.imdbRating
+            movieCard.appendChild(movieRating);
+
+            fragment.appendChild(movieCard);
+        };
+        removeCards();
+        sliderCards.appendChild(fragment);
+        spinnerVisionToggler(); 
+    }
+    catch (error) {
+        warningInfo = `Unable to process incoming data, ${error.message}`;
     }
 }
 
 
+function removeCards() {
+    sliderCards.innerHTML = "";
+}
 
 function spinnerVisionToggler() {
     const turnDisplay = document.getElementById("spinner");
     if (isSpinnerOff === true) {
         turnDisplay.classList.remove("noactive");
         isSpinnerOff = false;
-        console.log("spinner on");
     } else {
         turnDisplay.classList.add("noactive");
         isSpinnerOff = true;
-        console.log("spinner off");
     }   
 }
+
+window.addEventListener("DOMContentLoaded", function () {
+    createSlider(getMoviesPageData(moviesName));
+});
